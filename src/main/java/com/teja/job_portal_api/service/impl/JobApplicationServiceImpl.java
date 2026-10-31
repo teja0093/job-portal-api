@@ -1,7 +1,6 @@
 package com.teja.job_portal_api.service.impl;
 
 import com.teja.job_portal_api.dto.ApplicationResponse;
-import com.teja.job_portal_api.dto.ApplyRequest;
 import com.teja.job_portal_api.entity.*;
 import com.teja.job_portal_api.exception.BusinessRuleException;
 import com.teja.job_portal_api.exception.DuplicateResourceException;
@@ -27,11 +26,11 @@ public class JobApplicationServiceImpl implements JobApplicationService {
     private final UserRepository userRepository;
 
     @Override
-    public ApplicationResponse apply(Long jobId, ApplyRequest request) {
+    public ApplicationResponse apply(Long jobId, String candidateEmail) {
         Job job = jobRepository.findById(jobId)
                 .orElseThrow(() -> new ResourceNotFoundException("Job not found with id: " + jobId));
-        User candidate = userRepository.findById(request.candidateId())
-                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + request.candidateId()));
+        User candidate = userRepository.findByEmail(candidateEmail)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found: " + candidateEmail));
 
         if (candidate.getRole() != Role.CANDIDATE) {
             throw new BusinessRuleException("Only candidates can apply for jobs");

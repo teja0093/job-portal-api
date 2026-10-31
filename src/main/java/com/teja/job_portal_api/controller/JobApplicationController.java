@@ -1,13 +1,13 @@
 package com.teja.job_portal_api.controller;
 
 import com.teja.job_portal_api.dto.ApplicationResponse;
-import com.teja.job_portal_api.dto.ApplyRequest;
 import com.teja.job_portal_api.dto.StatusUpdateRequest;
 import com.teja.job_portal_api.service.JobApplicationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,8 +20,9 @@ public class JobApplicationController {
 
     @PostMapping("/api/jobs/{jobId}/apply")
     public ResponseEntity<ApplicationResponse> apply(@PathVariable Long jobId,
-                                                     @Valid @RequestBody ApplyRequest request) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(applicationService.apply(jobId, request));
+                                                     Authentication authentication) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(applicationService.apply(jobId, authentication.getName()));
     }
 
     @GetMapping("/api/applications/candidate/{candidateId}")
