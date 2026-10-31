@@ -40,4 +40,9 @@ public class GlobalExceptionHandler {
         body.put("message", message);
         return ResponseEntity.status(status).body(body);
     }
+    
+    @ExceptionHandler(BusinessRuleException.class)
+    public ResponseEntity<Map<String, Object>> handleBusinessRule(BusinessRuleException ex) {
+        return build(HttpStatus.BAD_REQUEST, ex.getMessage());
+    }
 }
