@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.Authentication;
+import java.util.Map;
 
 import java.util.List;
 
@@ -31,5 +33,10 @@ public class UserController {
     @GetMapping("/{id}")
     public UserResponse getById(@PathVariable Long id) {
         return userService.getById(id);
+    }
+    
+    @GetMapping("/me")
+    public Map<String, Object> me(Authentication auth) {
+        return Map.of("email", auth.getName(), "roles", auth.getAuthorities().toString());
     }
 }
