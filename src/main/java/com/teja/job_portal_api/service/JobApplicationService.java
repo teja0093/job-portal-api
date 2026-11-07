@@ -8,6 +8,7 @@ import java.util.List;
 public interface JobApplicationService {
     ApplicationResponse apply(Long jobId, String candidateEmail);
     List<ApplicationResponse> getByCandidate(Long candidateId);
+    List<ApplicationResponse> getByCandidateEmail(String email);
     List<ApplicationResponse> getByJob(Long jobId);
     ApplicationResponse updateStatus(Long applicationId, ApplicationStatus status);
 }

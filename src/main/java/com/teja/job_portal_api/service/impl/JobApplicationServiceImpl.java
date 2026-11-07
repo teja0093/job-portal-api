@@ -59,6 +59,14 @@ public class JobApplicationServiceImpl implements JobApplicationService {
 
     @Override
     @Transactional(readOnly = true)
+    public List<ApplicationResponse> getByCandidateEmail(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found: " + email));
+        return applicationRepository.findByCandidateId(user.getId()).stream().map(this::toResponse).toList();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public List<ApplicationResponse> getByJob(Long jobId) {
         return applicationRepository.findByJobId(jobId).stream().map(this::toResponse).toList();
     }

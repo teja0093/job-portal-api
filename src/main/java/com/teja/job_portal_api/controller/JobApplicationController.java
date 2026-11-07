@@ -40,4 +40,8 @@ public class JobApplicationController {
                                             @Valid @RequestBody StatusUpdateRequest request) {
         return applicationService.updateStatus(id, request.status());
     }
+    @GetMapping("/api/applications/my")
+    public List<ApplicationResponse> myApplications(Authentication authentication) {
+        return applicationService.getByCandidateEmail(authentication.getName());
+    }
 }
