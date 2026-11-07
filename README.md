@@ -16,6 +16,9 @@ A backend REST API for a job portal where employers post jobs and candidates app
 - Swagger / OpenAPI documentation
 - Unit tests with JUnit 5 and Mockito
 - Docker and docker-compose setup
+## Frontend
+
+A React UI for this API: [github.com/teja0093/job-portal-ui](https://github.com/teja0093/job-portal-ui)
 
 ## Tech stack
 
